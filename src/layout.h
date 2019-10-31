@@ -39,7 +39,7 @@ public:
   void setBodiesWeight(int *weights);
   bool step();
   size_t getBodiesCount();
-  vector<Body> *getBodies() { return &bodies; };
+  vector<Body> &getBodies() { return bodies; };
 };
 
 #endif /* defined(__layout____layout__) */

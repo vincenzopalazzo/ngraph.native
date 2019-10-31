@@ -96,24 +96,24 @@ void Layout::initBodies(int* links, long size) {
   }
 
   // Now that we have bodies, let's add links:
-  Body *fromBody = nullptr;
+  Body fromBody;
   for (int i = 0; i < size; i++) {
     int index = *(links + i);
     if (index < 0) {
       index = -index;
       from = index - 1;
-      fromBody = &(bodies[from]);
+      fromBody = (bodies[from]);
     } else {
       int to = index - 1;
-      fromBody->springs.push_back(to);
+      fromBody.springs.emplace_back(to);
       bodies[to].incomingCount += 1;
     }
   }
 
   // Finally, update body mass based on total number of neighbors:
-  for (size_t i = 0; i < bodies.size(); i++) {
-    Body *body = &(bodies[i]);
-    body->mass = 1 + (body->springs.size() + body->incomingCount)/3.0;
+  //for (size_t i = 0; i < bodies.size(); i++) {
+  for(Body body : bodies){
+    body.mass = 1 + (body.springs.size() + body.incomingCount)/3.0;
   }
 }
 
@@ -134,7 +134,7 @@ size_t Layout::getBodiesCount() {
 bool Layout::step() {
   accumulate();
   double totalMovement = integrate();
-  cout << totalMovement << " move" << endl;
+  cout << totalMovement << " move" << "endl";
   return totalMovement < settings.stableThreshold;
 }
 

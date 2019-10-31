@@ -27,3 +27,5 @@ layout++
 *.exe
 *.out
 *.app
+
+.vscode/
