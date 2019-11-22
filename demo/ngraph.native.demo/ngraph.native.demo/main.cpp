@@ -110,7 +110,7 @@ int main(int argc, const char *argv[]) {
         assert(result == true);
         cout << "Done." << endl;
         graphLayout.init(graphFile.content, graphFile.size, positions.content, positions.size);
-        cout << "Loaded " << graphLayout.getBodiesCount() << " bodies;" << endl;
+        cout << "Loaded " << graphLayout.getBodiesCount() << " bodies;" << "\n";
     }
     // TODO: This should be done via arguments, but doing it inline now:
     // If current folder containsfil 'weights.bin' we will try to assign
@@ -122,19 +122,16 @@ int main(int argc, const char *argv[]) {
         cout << "Size: " << weights.size;
         graphLayout.setBodiesWeight(weights.content);
     }*/
-    cout << "Starting layout from " << startFrom << " iteration;" << "\n";
-    for(int i = 0; i < 10000; i++){
-        cout << "Step " << i << "\n";
+    int i = 0;
+    while(!graphLayout.step()){
+        i++;
+        std::cout << "Step " << i << "\n";
         bool done = graphLayout.step();
-        if (done) {
-            cout << "Done!" << "\n";
-            break;
-        }
-        if (i % 5 == 0) {
+        if(i % 1000 == 0) {
             save(i, graphLayout.getBodies());
         }
     }
-
+    cout << "Done!" << "\n";
     delete[] graphFile.content;
     return EXIT_SUCCESS;
 }
